@@ -62,7 +62,7 @@ class ShareBnbApi {
 
     let res = await this.request(`listings`, formData, 'POST');
     console.log("new listing", res);
-    return res.listing;
+    return res.new_listing;
   }
 
   /** Returns user object upon logging in */
