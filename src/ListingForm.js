@@ -23,7 +23,6 @@ function ListingForm({ currUser }) {
     evt.preventDefault();
     try {
       async function submitListing(){
-        debugger
         const newListing = await ShareBnbApi.createListing(formData);
         setNewListingId(newListing.id)
       }

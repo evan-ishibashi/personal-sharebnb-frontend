@@ -31,7 +31,7 @@ function NavBar({ logout, currUser = null }) {
         </li>
         <button
           className='btn link-danger text-decoration-none'
-          onClick={logout}>Log Out {currUser.user.username}</button>
+          onClick={logout}>Log Out {currUser.username}</button>
       </>
     );
   }

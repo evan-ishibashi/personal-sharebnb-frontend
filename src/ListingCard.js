@@ -11,7 +11,7 @@ import './ListingCard.css';
  * TODO: Add button to book, probably pass functionality down from parent
  */
 function ListingCard({ listing }) {
-  const { name, photos, price, details, id } = listing;
+  const { name, photos, price, details, id, host } = listing;
   return (
     <div className="ListingCard card w-75 mb-4 mt-4 mx-auto">
       <Link className="Listing card text-decoration-none" to={`/listings/${id}`}>

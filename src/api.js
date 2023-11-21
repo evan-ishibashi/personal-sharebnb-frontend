@@ -10,14 +10,14 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5001";
 
 class ShareBnbApi {
 
-  static token = null;
+  static token = localStorage.getItem("authToken");
 
   static async request(endpoint, data = {}, method = "GET") {
     const url = new URL(`${BASE_URL}/${endpoint}`);
     const headers = {
-      // authorization: `Bearer ${ShareBnbApi.token}`,
       'Access-Control-Allow-Origin': '*',
       'content-type': 'application/json',
+      'Authorization': `Bearer ${ShareBnbApi.token}`,
     };
 
     url.search = (method === "GET")
@@ -74,6 +74,12 @@ class ShareBnbApi {
   /** Returns user object upon signing up  */
   static async signup(data) {
     let res = await this.request(`signup`, data, 'POST');
+    return res;
+  }
+
+  /** Returns user object  */
+  static async getUser() {
+    let res = await this.request(`getuser`);
     return res;
   }
 

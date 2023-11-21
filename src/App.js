@@ -11,33 +11,61 @@ import ShareBnbApi from './api';
 /** App.
  *  Renders Nav and Routes for Sharebnb App. */
 function App() {
+  const [token, setToken] = useState(localStorage.getItem("authToken"))
   const [currUser, setCurrUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (token) {
+        try {
+            async function getUser() {
+                const userData = await ShareBnbApi.getUser();
+                console.log("userData in useEffect", userData)
+                setCurrUser(userData);
+                setIsLoading(false);
+            }
+            getUser();
+        }
+        catch (error) {
+            console.error(error);
+        }
+    } else {
+        setIsLoading(false);
+    }
+
+}, [token]);
 
   /** logs a user in */
   async function login(formData) {
     const user = await ShareBnbApi.login(formData);
+    const jwt = user.user.jwt;
 
-    localStorage.setItem("currUser", user.user.id);
-    setCurrUser(user);
+    localStorage.setItem("authToken", jwt);
+    ShareBnbApi.token = localStorage.getItem("authToken");
+    console.log(user)
+    setToken(jwt);
   }
 
   /** registers a user */
   async function signup(formData) {
     const user = await ShareBnbApi.signup(formData);
     console.log(user);
-    localStorage.setItem("currUser", user);
+    localStorage.setItem("authToken", user);
     setCurrUser(user);
   }
 
   function logout() {
     setCurrUser(null);
-    localStorage.removeItem("currUser");
+    localStorage.removeItem("authToken");
     //TODO:redirect back to login
   }
 
 
-  //TODO: incorporate jwts
-  //TODO: finish functionality of app
+  if (isLoading) {
+    return (
+        <p>LOADING..</p>
+    );
+}
 
   return (
     <div className="App">
