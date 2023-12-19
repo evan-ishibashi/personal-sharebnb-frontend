@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import './NavBar.css';
 
 /** NavBar: displays navbar
@@ -10,6 +10,14 @@ import './NavBar.css';
  */
 function NavBar({ logout, currUser = null }) {
   /** renders if user is not logged in */
+
+  const navigate = useNavigate();
+
+  function handleClick(){
+    logout();
+    navigate("/")
+
+  }
   function notLoggedIn() {
     return (
       <>
@@ -27,11 +35,14 @@ function NavBar({ logout, currUser = null }) {
     return (
       <>
         <li className="nav-item">
+          <Link className="nav-link" to="/listings">Listings</Link>
+        </li>
+        <li className="nav-item">
           <Link className="nav-link" to="/listings/add">Add a new listing</Link>
         </li>
         <button
           className='btn link-danger text-decoration-none'
-          onClick={logout}>Log Out {currUser.username}</button>
+          onClick={handleClick}>Log Out {currUser.username}</button>
       </>
     );
   }
@@ -39,7 +50,7 @@ function NavBar({ logout, currUser = null }) {
   return (
     <nav className="Nav navbar navbar-light navbar-expand-lg">
       <div className="container">
-        <Link className="navbar-brand" to="/listings">ShareBnB</Link>
+        <Link className="navbar-brand" to="/">ShareBnB</Link>
 
         <ul className="list-unstyled">
           {currUser

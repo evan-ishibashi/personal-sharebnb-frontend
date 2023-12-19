@@ -55,9 +55,10 @@ function App() {
   }
 
   function logout() {
+    setToken(null);
+    ShareBnbApi.token = null;
     setCurrUser(null);
     localStorage.removeItem("authToken");
-    //TODO:redirect back to login
   }
 
 

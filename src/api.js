@@ -1,4 +1,7 @@
+import { Navigate } from "react-router-dom";
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5001";
+
+
 
 /** API Class.
  *
@@ -31,6 +34,11 @@ class ShareBnbApi {
 
     const resp = await fetch(url, { method, body, headers });
 
+    if (resp.status === 401) {
+      console.error('Unauthorized request. Redirecting to login page.');
+      <Navigate to="/login" />
+    }
+
     //fetch API does not throw an error, have to dig into the resp for msgs
     if (!resp.ok) {
       console.error("API Error:", resp.statusText, resp.status);
@@ -51,14 +59,15 @@ class ShareBnbApi {
     return res.listings;
   }
 
-  /** Get details on a company by handle. Returns {company} */
-  static async getCompany(id) {
+  /** Get details on a Listing by id. Returns {listing} */
+  static async getListing(id) {
     let res = await this.request(`listings/${id}`);
     return res.listing;
   }
 
   /** Creates a new listing */
   static async createListing(formData) {
+    console.log("token is ", this.token)
 
     let res = await this.request(`listings`, formData, 'POST');
     console.log("new listing", res);
@@ -89,7 +98,7 @@ class ShareBnbApi {
     const method = "POST";
     // never set header by yourself if using multiform/form-data
     // const headers = {
-    //   "Content-Type": "multipart/form-data; boundary=----WebKitFormBoundaryE1NUFwGGWwIitBhv"
+    //   "Authorization": `Bearer ${ShareBnbApi.token}`
     // };
 
     const formData = new FormData();

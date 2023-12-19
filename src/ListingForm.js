@@ -14,7 +14,7 @@ function ListingForm({ currUser }) {
     name: "",
     details: "",
     price: "",
-    id: currUser.user.id
+    id: currUser.id
   };
   const [formData, setFormData] = useState(initialState);
   const [newListingId, setNewListingId] = useState(null);
@@ -23,6 +23,7 @@ function ListingForm({ currUser }) {
     evt.preventDefault();
     try {
       async function submitListing(){
+        console.log("token in submit is", ShareBnbApi.token)
         const newListing = await ShareBnbApi.createListing(formData);
         setNewListingId(newListing.id)
       }
