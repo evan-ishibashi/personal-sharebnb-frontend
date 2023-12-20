@@ -1,3 +1,13 @@
+See the live demo at: https://ei-sharebnb.surge.sh/
+
+To log in as test user:
+username: test
+password: password
+
+See the python flask backend here: https://github.com/evan-ishibashi/personal-sharebnb-backend
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
