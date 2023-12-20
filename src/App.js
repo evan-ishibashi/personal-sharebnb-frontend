@@ -49,9 +49,11 @@ function App() {
   /** registers a user */
   async function signup(formData) {
     const user = await ShareBnbApi.signup(formData);
-    console.log(user);
-    localStorage.setItem("authToken", user);
-    setCurrUser(user);
+    const jwt = user.user.jwt;
+
+    localStorage.setItem("authToken", jwt);
+    ShareBnbApi.token = localStorage.getItem("authToken")
+    setToken(jwt);
   }
 
   function logout() {
